@@ -88,7 +88,7 @@
             </div>
             <div class="card-body">
                 <form action="{{ route('donasi.store') }}" method="POST" enctype="multipart/form-data">
-                    @csrf
+                    @csrf 
 
                     <div class="form-group">
                         <label>Nama Donatur</label>
@@ -118,7 +118,7 @@
                             </div>
                         @enderror
                     </div>
-
+                    
                     <div class="form-group">
                         <label>Metode Pembayaran</label>
                         <select class="form-control @error('payment_method') is-invalid @enderror" name="payment_method"

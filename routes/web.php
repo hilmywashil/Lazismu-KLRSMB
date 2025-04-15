@@ -80,7 +80,11 @@ Route::get('/dokumentasi', [DokumentasiController::class, 'index'])->name('dokum
 Route::get('/dokumentasi/create', [DokumentasiController::class, 'create'])->name('dokumentasi.create');
 Route::post('/dokumentasi', [DokumentasiController::class, 'store'])->name('dokumentasi.store');
 
-Route::post('/dokumentasi/add-gambar', [DetailDokumentasi::class, 'store'])->name('dokumentasi.gambar');
+Route::post('/dokumentasi/add-gambar', [DetailDokumentasiController::class, 'store'])->name('dokumentasi.gambar');
 Route::get('/dokumentasi/{id}', [DetailDokumentasiController::class, 'index'])->name('detail.dokumentasi');
+
+Route::get('/dokumentasi/edit/{id}', [DokumentasiController::class, 'edit'])->name('dokumentasi.edit');
+Route::put('/dokumentasi/update/{id}', [DokumentasiController::class, 'update'])->name('dokumentasi.update');
+Route::delete('/dokumentasi/{id}', [DokumentasiController::class, 'destroy'])->name('dokumentasi.destroy');
 
 require __DIR__ . '/auth.php';

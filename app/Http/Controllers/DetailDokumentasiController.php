@@ -10,15 +10,9 @@ class DetailDokumentasiController extends Controller
 {
     public function index($id)
     {
-        $detail = DetailDokumentasi::where('dokumentasi_id', $id)->latest()->first();
-
-        return view('dokumentasis.detail.index', compact('detail'));
+        $details = DetailDokumentasi::where('dokumentasi_id', $id)->latest()->get();
+        return view('dokumentasis.detail.index', compact('details', 'id'));
     }
-
-    // public function create()
-    // {
-    //     return view('dokumentasi.detail.addImage');
-    // }
 
     public function store(Request $request): RedirectResponse
     {
@@ -36,6 +30,6 @@ class DetailDokumentasiController extends Controller
             'dokumentasi_id' => $dokumentasiId
         ]);
 
-        return redirect('/')->with('success', 'Sukses upload gambar');
+        return redirect()->back()->with('success', 'Sukses upload gambar');
     }
 }

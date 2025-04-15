@@ -30,6 +30,31 @@
     <!-- Main CSS File -->
     <link href="/assets/css/main.css" rel="stylesheet">
 
+    <style>
+        /* Custom CSS for Floating Button */
+        .floating-button {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            z-index: 1000;
+            width: 50px;
+            height: 50px;
+            font-size: 30px;
+            background-color: #007bff;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            border: none;
+        }
+
+        .floating-button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+
 </head>
 
 <body class="latarbelakang-page">
@@ -52,9 +77,6 @@
             <div class="container position-relative d-flex align-items-center justify-content-end">
                 <a href="beranda.html" class="logo d-flex align-items-center me-auto">
                     <img src="/assets/img/RSMB.png" alt="">
-
-                    <!-- Uncomment the line below if you also wish to use a text logo -->
-                    <!-- <h1 class="sitename">Medicio</h1>  -->
                 </a>
 
                 <nav id="navmenu" class="navmenu">
@@ -79,50 +101,63 @@
         <section id="gallery" class="gallery section">
             <div class="container">
                 <div class="container section-title" data-aos="fade-up">
-                    <h2>{{ $detail->dokumentasi->judul  }}</h2>
+                    <h2>{{ $details->first()?->dokumentasi->judul }}</h2>
+                    <p>{{ $details->first()?->dokumentasi->deskripsi }}</p>
                 </div>
                 <!-- Gallery Grid -->
                 <div class="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-4" data-aos="fade-up">
-                    <div class="col">
-                        <a class="glightbox" data-gallery="images-gallery" href="/assets/img/sunat/sunat2.JPG">
-                            <img src="/assets/img/sunat/sunat2.JPG" class="img-fluid rounded-3" alt="">
-                        </a>
-                    </div>
-                    <div class="col">
-                        <a class="glightbox" data-gallery="images-gallery" href="/assets/img/sunat/sunat2.JPG">
-                            <img src="/assets/img/sunat/sunat2.JPG" class="img-fluid rounded-3" alt="">
-                        </a>
-                    </div>
-                    <div class="col">
-                        <a class="glightbox" data-gallery="images-gallery" href="/assets/img/sunat/sunat2.JPG">
-                            <img src="/assets/img/sunat/sunat2.JPG" class="img-fluid rounded-3" alt="">
-                        </a>
-                    </div>
-                    <form action="{{ route('dokumentasi.gambar') }}" method="POST" enctype="multipart/form-data">
-                        @csrf
-                        <div class="col">
-                            <input type="file" name="image" accept="image/*" required>
-                            <button type="submit">Tambahkan</button>
-                        </div>
-                    </form>
+                    @forelse ($details as $d)
+                        @if ($d->image)
+                            <div class="col">
+                                <a class="glightbox" data-gallery="images-gallery"
+                                    href="{{ asset('storage/dokumentasi/' . $d->image) }}">
+                                    <img src="{{ asset('storage/dokumentasi/' . $d->image) }}"
+                                        class="img-fluid rounded-3" style="aspect-ratio: 4 / 3; object-fit: cover;"
+                                        alt="">
+                                </a>
+                            </div>
+                        @endif
+                    @empty
+                        <p class="text-muted">Belum ada gambar dokumentasi.</p>
+                    @endforelse
                 </div>
             </div>
         </section>
     </main>
 
-    </div>
-    </div>
+    <!-- Button to Trigger Modal -->
+    @if (Auth::check() && Auth::user()->role == 'admin')
+        <div class="col">
+            <button type="button" class="btn floating-button" data-bs-toggle="modal" data-bs-target="#uploadModal">
+                +
+            </button>
+        </div>
+    @endif
 
-    <div class="container copyright text-center mt-4">
-        <p>© <span>Copyright</span> <strong class="px-1 sitename">Lazismu RSMB</strong> <span>All Rights Reserved</span>
-        </p>
-        <div class="credits">
-            Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a> Distributed by <a
-                href=“https://themewagon.com>ThemeWagon
+    {{-- Modal for Uploading Image --}}
+    <div class="modal fade" id="uploadModal" tabindex="-1" aria-labelledby="uploadModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="uploadModalLabel">Tambahkan Gambar</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form action="{{ route('dokumentasi.gambar') }}" method="POST" enctype="multipart/form-data">
+                        @csrf
+                        <div class="mb-3">
+                            <input type="hidden" name="dokumentasi_id"
+                                value="{{ $details->first()?->dokumentasi->id }}">
+                            <label for="image" class="form-label">Pilih Gambar</label>
+                            <input type="file" name="image" accept="image/*" required class="form-control"
+                                id="image">
+                        </div>
+                        <button type="submit" class="btn btn-primary w-100">Upload</button>
+                    </form>
+                </div>
+            </div>
         </div>
     </div>
-
-    </footer>
 
     <!-- Scroll Top -->
     <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i
