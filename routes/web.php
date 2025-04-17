@@ -2,12 +2,15 @@
 
 use App\Http\Controllers\DetailDokumentasiController;
 use App\Http\Controllers\DokumentasiController;
+use App\Http\Controllers\GalleryController;
+use App\Http\Controllers\HeroController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\DonationController;
 use App\Http\Controllers\InfaqController;
 use App\Http\Controllers\TypeController;
 use App\Models\DetailDokumentasi;
 use App\Models\Dokumentasi;
+use App\Models\Hero;
 use Illuminate\Support\Facades\Route;
 use App\Models\Type;
 
@@ -26,7 +29,8 @@ use App\Models\Type;
 Route::get('/', function () {
     return view('welcome', [
         'types' => Type::take(3)->get(),
-        'dokumentasis' => Dokumentasi::take(5)->get(),
+        'dokumentasis' => Dokumentasi::take(6)->get(),
+        'heroes' => Hero::latest()->get(),
     ]);
 });
 
@@ -86,5 +90,16 @@ Route::get('/dokumentasi/{id}', [DetailDokumentasiController::class, 'index'])->
 Route::get('/dokumentasi/edit/{id}', [DokumentasiController::class, 'edit'])->name('dokumentasi.edit');
 Route::put('/dokumentasi/update/{id}', [DokumentasiController::class, 'update'])->name('dokumentasi.update');
 Route::delete('/dokumentasi/{id}', [DokumentasiController::class, 'destroy'])->name('dokumentasi.destroy');
+
+Route::get('/admin/heroes', [HeroController::class, 'index'])->name('admin.hero');
+Route::get('/admin/hero/add', [HeroController::class, 'create'])->name('admin.hero.create');
+Route::post('/admin/hero/store', [HeroController::class, 'store'])->name('admin.hero.store');
+Route::delete('/admin/hero/delete/{id}', [HeroController::class, 'destroy'])->name('admin.hero.delete');
+
+Route::get('/admin/galleries', [GalleryController::class, 'index'])->name('admin.galeri');
+Route::get('/admin/galeri/add', [GalleryController::class, 'create'])->name('admin.galeri.create');
+Route::post('/admin/galeri/store', [GalleryController::class, 'store'])->name('admin.galeri.store');
+Route::delete('/admin/galeri/delete/{id}', [GalleryController::class, 'destroy'])->name('admin.galeri.delete');
+
 
 require __DIR__ . '/auth.php';

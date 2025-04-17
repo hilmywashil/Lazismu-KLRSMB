@@ -66,21 +66,13 @@
             <div style="margin-bottom: 50px;" data-aos="fade-up">
                 <div id="hero-carousel" class="carousel slide carousel-fade" data-bs-ride="carousel"
                     data-bs-interval="5000">
-                    <div class="carousel-item active"
-                        style="background-color:#f68f28; background-image: url('assets/img/background.jpg'); background-size: 0; background-position: center; display: flex; justify-content: center; align-items: flex-start; height: 100vh;">
-                        <img src="assets/img/hero-carousel/gambarsatu.jpg" alt="" class="img-fluid"
-                            style="max-width: 80%; height: auto; margin-top: 10px; padding: 20px">
-                    </div>
-                    <div class="carousel-item"
-                        style="background-color:#f68f28; background-image: url('assets/img/background.jpg'); background-size: 0; background-position: center; display: flex; justify-content: center; align-items: flex-start; height: 100vh;">
-                        <img src="assets/img/hero-carousel/gambardua.jpg" alt="" class="img-fluid"
-                            style="max-width: 80%; height: auto; margin-top: 10px; padding: 20px">
-                    </div>
-                    <div class="carousel-item"
-                        style="background-color:#f68f28; background-image: url('assets/img/background.jpg'); background-size: 0; background-position: center; display: flex; justify-content: center; align-items: flex-start; height: 100vh;">
-                        <img src="assets/img/hero-carousel/gambartiga.jpg" alt="" class="img-fluid"
-                            style="max-width: 80%; height: auto; margin-top: 10px; padding: 20px">
-                    </div>
+                    @foreach ($heroes as $h)
+                        <div class="carousel-item active"
+                            style="background-color:#f68f28; background-image: url('assets/img/background.jpg'); background-size: 0; background-position: center; display: flex; justify-content: center; align-items: flex-start; height: 100vh;">
+                            <img src="{{ asset('storage/heroes/' . $h->image) }}" alt="" class="img-fluid"
+                                style="width: 57%; height: auto; aspect-ratio: 16 / 9; object-fit: cover; margin-top: 10px; padding: 20px; border-radius: 50px;">
+                        </div>
+                    @endforeach
                     <a class="carousel-control-prev" href="#hero-carousel" role="button" data-bs-slide="prev">
                         <span class="carousel-control-prev-icon bi bi-chevron-left" aria-hidden="true"></span>
                     </a>
@@ -89,9 +81,17 @@
                     </a>
                     <ol class="carousel-indicators"></ol>
                 </div>
-            </div>
-        </section>
 
+            </div>
+
+        </section>
+        @if (auth()->user() && auth()->user()->role === 'admin')
+            <div class="text-center mt-4">
+                <a href="{{ route('admin.hero') }}"
+                    style="font-size: 30px; text-decoration: none; font-weight: bold; display: inline-block; background: #28a745; color: white; border-radius: 50px; padding-left: 20px; padding-right: 20px;">Kelola
+                    Banner</a>
+            </div>
+        @endif
         <section id="featured-services" class="featured-services section">
             <div class="container">
                 <div class="row gy-2">

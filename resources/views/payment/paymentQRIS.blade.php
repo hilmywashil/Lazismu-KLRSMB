@@ -66,15 +66,15 @@
                 <h3 class="text-center my-4">Pembayaran QRIS</h3>
                 <div class="card border-0 shadow-sm rounded">
                     <div class="card-body text-center"> 
-                        <p class="text-xl ">Scan QRIS dibawah untuk melanjutkan Donasi</p>
-                        <img src="{{ asset('/images/QR.png') }}" alt="" class="">
-                        <p class="text-xl mt-4"><strong>Atas nama LAZISMU RSMB</strong></p>
+                        <p class="h5">Scan QRIS di bawah untuk melanjutkan Donasi</p>
+                        <img src="{{ asset('/images/zakat.jpg') }}" alt="QRIS Donasi" class="img-fluid w-25 my-3">
+                        <p class="h5 mt-4"><strong>Atas nama LAZISMU RSMB</strong></p>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-
+    
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
