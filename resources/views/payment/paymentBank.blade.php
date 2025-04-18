@@ -1,91 +1,53 @@
-<!DOCTYPE html>
-<html lang="en">
+@extends('partials.layout')
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Donasi</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
-    <style>
-        body {
-            background-color: #f4f6f9;
-            font-family: Arial, sans-serif;
-        }
+@section('content')
+    <main id="main" class="d-flex align-items-center justify-content-center" style="min-height: 80vh;">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-8" data-aos="fade-up">
+                    <div class="card border-0 shadow-sm rounded" data-aos="zoom-in">
+                        <div class="card-body text-center">
+                            <p class="h5" data-aos="fade-right">
+                                Silakan transfer donasi Anda ke nomor rekening berikut:
+                            </p>
+                            <div class="mt-4 mb-4" data-aos="flip-left" data-aos-delay="100">
+                                <p class="h4 font-weight-bold text-dark">
+                                    <strong>2314 1453 5887 5339</strong>
+                                </p>
+                                <p class="h5">
+                                    a.n. <strong>LAZISMU RSMB</strong>
+                                </p>
+                            </div>
+                            <p class="text-muted" data-aos-delay="200">
+                                Setelah melakukan transfer, silakan konfirmasi kepada admin melalui kontak yang tersedia.
+                            </p>
+                            <a href="{{ route('infaq.thankyou') }}" class="btn btn-success">
+                                <i class="fas fa-check me-2"></i> Saya sudah melakukan pembayaran
+                            </a>
 
-        .card {
-            border-radius: 15px;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-        }
-
-        .table th,
-        .table td {
-            text-align: center;
-        }
-
-        .table thead {
-            background-color: #007bff;
-            color: white;
-        }
-
-        .btn-success {
-            background-color: #28a745;
-            border-color: #28a745;
-        }
-
-        .btn-success:hover {
-            background-color: #218838;
-            border-color: #1e7e34;
-        }
-
-        .alert {
-            margin-top: 20px;
-        }
-
-        .pagination {
-            justify-content: center;
-        }
-
-        h3 {
-            color: #007bff;
-            font-weight: bold;
-        }
-
-        .qr-image {
-            justify-content: center;
-        }
-    </style>
-</head>
-
-<body>
-
-    <div class="container mt-5">
-        <div class="row justify-content-center">
-            <div class="col-md-8">
-                <h3 class="text-center my-4">Pembayaran Bank</h3>
-                <div class="card border-0 shadow-sm rounded">
-                    <div class="card-body text-center"> 
-                        <p class="text-xl ">Transfer ke nomor Rekening 2314145358875339 a.n. LAZISMU RSMB</p>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
+    </main>
+@endsection
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+@push('styles')
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css" />
+@endpush
+
+@push('scripts')
     <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
-
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script>
-        //message with toastr
+        AOS.init();
+
         @if(session()->has('success'))
             toastr.success('{{ session('success') }}', 'BERHASIL!');
         @elseif(session()->has('error'))
             toastr.error('{{ session('error') }}', 'GAGAL!');
         @endif
     </script>
-
-</body>
-
-</html>
+@endpush

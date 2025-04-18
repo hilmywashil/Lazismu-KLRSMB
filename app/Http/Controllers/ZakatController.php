@@ -2,24 +2,31 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Type;
+use App\Models\Zakat;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Storage;
 
-class TypeController extends Controller
+class ZakatController extends Controller
 {
     public function index(): View
     {
-        $types = Type::latest()->paginate(5);
+        $zakats = Zakat::latest()->paginate();
 
-        return view('types.index', compact('types'));
+        return view('admin.zakat.zakat', compact('zakats'));
+    }
+
+    public function userPage(): View
+    {
+        $zakats = Zakat::latest()->paginate();
+
+        return view('zakat.index', compact('zakats'));
     }
 
     public function create(): View
     {
-        return view('types.create');
+        return view('zakat.create');
     }
  
     public function store(Request $request): RedirectResponse
@@ -31,29 +38,29 @@ class TypeController extends Controller
         ]);
 
         $image = $request->file('image');
-        $image->storeAs('public/types', $image->hashName());
+        $image->storeAs('public/zakats', $image->hashName());
 
-        Type::create([
+        Zakat::create([
             'image' => $image->hashName(),
             'title' => $request->title,
             'target' => $request->target
         ]);
 
-        return redirect()->to('/donasi-disini')->with(['success' => 'Berhasil Donasi!']);
+        return redirect()->route('zakat.index')->with(['success' => 'Berhasil Donasi!']);
     }
 
-    public function show(string $id): View
-    {
-        $type = Type::findOrFail($id);
+    // public function show(string $id): View
+    // {
+    //     $zakat = Zakat::findOrFail($id);
 
-        return view('types.show', compact('type'));
-    }
+    //     return view('zakat.show', compact('zakat'));
+    // }
 
     public function edit(string $id): View
     {
-        $type = Type::findOrFail($id);
+        $zakat = Zakat::findOrFail($id);
 
-        return view('types.edit', compact('type'));
+        return view('zakat.edit', compact('zakat'));
     }
 
     public function update(Request $request, $id): RedirectResponse
@@ -64,16 +71,16 @@ class TypeController extends Controller
             'target' => 'required'
         ]);
 
-        $type = Type::findOrFail($id);
+        $zakat = Zakat::findOrFail($id);
 
         if ($request->hasFile('image')) {
 
             $image = $request->file('image');
-            $image->storeAs('public/types', $image->hashName());
+            $image->storeAs('public/zakats', $image->hashName());
 
-            Storage::delete('public/types/' . $type->image);
+            Storage::delete('public/zakats/' . $zakat->image);
 
-            $type->update([
+            $zakat->update([
                 'image' => $image->hashName(),
                 'title' => $request->title,
                 'target' => $request->target
@@ -81,23 +88,24 @@ class TypeController extends Controller
 
         } else {
 
-            $type->update([
+            $zakat->update([
                 'title' => $request->title,
                 'target' => $request->target
             ]);
         }
 
-        return redirect()->route('donasi-disini.index')->with(['success' => 'Data Berhasil Diubah!']);
+        return redirect()->route('zakat.index')->with(['success' => 'Data Berhasil Diubah!']);
     }
 
     public function destroy($id): RedirectResponse
     {
-        $type = Type::findOrFail($id);
+        $zakat = Zakat::findOrFail($id);
 
-        Storage::delete('public/types/' . $type->image);
+        Storage::delete('public/zakats/' . $zakat->image);
 
-        $type->delete();
+        $zakat->delete();
 
-        return redirect()->to('/donasi-disini')->with(['success' => 'Data Berhasil Dihapus!']);
+        return redirect()->route('zakat.index')->with(['success' => 'Data Berhasil Dihapus!']);
     }
+
 }

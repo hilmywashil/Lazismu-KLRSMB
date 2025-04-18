@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Type extends Model
+class Zakat extends Model
 {
     use HasFactory;
 
@@ -14,4 +14,9 @@ class Type extends Model
         'title',
         'target'
     ];
+
+    public function kirimZakat()
+    {
+        return $this->hasMany(KirimZakat::class, 'zakat_id');
+    }
 }

@@ -8,6 +8,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\DonationController;
 use App\Http\Controllers\InfaqController;
 use App\Http\Controllers\PageController;
+use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\TypeController;
 use App\Models\DetailDokumentasi;
 use App\Models\Dokumentasi;
@@ -29,7 +30,6 @@ use App\Models\Type;
 // Halaman Utama
 Route::get('/', function () {
     return view('welcome', [
-        'types' => Type::take(3)->get(),
         'dokumentasis' => Dokumentasi::take(6)->get(),
         'heroes' => Hero::latest()->get(),
     ]);
@@ -59,18 +59,21 @@ Route::middleware('auth')->group(function () {
 // Group middleware: admin
 Route::middleware('admin')->group(function () {
 
-    // Infaq
-    Route::get('/infaq', [InfaqController::class, 'index']);
-    Route::get('/infaq/create', [InfaqController::class, 'create'])->name('infaq.create');
-    Route::post('/infaq/create', [InfaqController::class, 'store'])->name('infaq.store');
+    Route::get('/admin/infaq', [InfaqController::class, 'index'])->name('admin.infaq.index');
+    Route::get('/admin/infaq/create', [InfaqController::class, 'create'])->name('admin.infaq.create');
+    Route::get('admin/infaq/edit/{id}', [InfaqController::class, 'edit'])->name('admin.infaq.edit');
+    Route::post('/infaq/create', [InfaqController::class, 'store'])->name('admin.infaq.store');
+    Route::put('/infaq/update/{id}', [InfaqController::class, 'update'])->name('admin.infaq.update');
+    Route::delete('/infaq/delete/{id}', [InfaqController::class, 'destroy'])->name('admin.infaq.delete');
+
+    //Data Infaq
+    Route::get('/admin/infaq/data', [InfaqController::class, 'dataInfaq'])->name('admin.infaq.data');
 
     Route::get('/dokumentasi', [DokumentasiController::class, 'index'])->name('dokumentasi.index');
     Route::get('/dokumentasi/create', [DokumentasiController::class, 'create'])->name('dokumentasi.create');
     Route::post('/dokumentasi', [DokumentasiController::class, 'store'])->name('dokumentasi.store');
-
     Route::post('/dokumentasi/add-gambar', [DetailDokumentasiController::class, 'store'])->name('dokumentasi.gambar');
     Route::get('/dokumentasi/{id}', [DetailDokumentasiController::class, 'index'])->name('detail.dokumentasi');
-
     Route::get('/dokumentasi/edit/{id}', [DokumentasiController::class, 'edit'])->name('dokumentasi.edit');
     Route::put('/dokumentasi/update/{id}', [DokumentasiController::class, 'update'])->name('dokumentasi.update');
     Route::delete('/dokumentasi/{id}', [DokumentasiController::class, 'destroy'])->name('dokumentasi.destroy');
@@ -85,23 +88,30 @@ Route::middleware('admin')->group(function () {
     Route::post('/admin/galeri/store', [GalleryController::class, 'store'])->name('admin.galeri.store');
     Route::delete('/admin/galeri/delete/{id}', [GalleryController::class, 'destroy'])->name('admin.galeri.delete');
 
+    Route::get('/admin/kelola-menu', function () {
+        return view('admin.kelola');
+    })->middleware(['auth', 'verified'])->name('kelola-menu');
 
+    Route::get('/admin/data', function () {
+        return view('admin.data');
+    })->middleware(['auth', 'verified'])->name('data');
+    
 });
 
 // Pages
 Route::get('/latar-belakang', [PageController::class, 'latarBelakang'])->name('latar-belakang');
 Route::get('/contact', [PageController::class, 'contact'])->name('contact');
 
+//Infaq
+Route::get('/infaq', [InfaqController::class, 'userPage'])->name('infaq.index');
+Route::get('/berinfaq/{infaq}', [InfaqController::class, 'halamanKirimInfaq'])->name('infaq.kirim-infaq');
+Route::post('/berinfaq', [InfaqController::class, 'kirimInfaq'])->name('infaq.kirim-infaq.store');
+Route::get('/infaq/terima-kasih', function () {
+    return view('infaq.thankyou');
+})->name('infaq.thankyou');
+
 // Payment (Infaq)
-Route::get('/payment-bank-infaq', [InfaqController::class, 'paymentBank'])->name('infaq.payment.bank');
-Route::get('/payment-qris-infaq', [InfaqController::class, 'paymentQRIS'])->name('infaq.payment.qris');
-
-// Resource route
-Route::resource('/donasi-disini', TypeController::class);
-Route::resource('/infaq-disini', TypeController::class);
-
-Route::get('/admin/kelola-menu', function () {
-    return view('admin.kelola');
-})->middleware(['auth', 'verified'])->name('kelola-menu');
+Route::get('/payment-bank-infaq', [PaymentController::class, 'bank'])->name('infaq.payment.bank');
+Route::get('/payment-qris-infaq', [PaymentController::class, 'qris'])->name('infaq.payment.qris');
 
 require __DIR__ . '/auth.php';

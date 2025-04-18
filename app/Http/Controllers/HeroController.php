@@ -24,7 +24,7 @@ class HeroController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
-            'image' => 'required|mimes:jpeg,jpg,png,svg,webp',
+            'image' => 'required|mimes:jpeg,jpg,png,svg,webp|max:2048',
         ]);
 
         $image = $request->file('image');
@@ -34,7 +34,7 @@ class HeroController extends Controller
             'image' => $image->hashName(),
         ]);
 
-        return redirect()->back()->with(['success' => 'Berhasil Ditambahkan!']);
+        return redirect()->back()->with(['success' => 'Gambar berhasil diupload!']);
     }
 
     public function destroy($id): RedirectResponse

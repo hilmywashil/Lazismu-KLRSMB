@@ -147,7 +147,7 @@
                 <span class="close">&times;</span>
                 <h3>Pilih jenis yang ingin ditambahkan</h3>
                 <ul>
-                    <   li><a href="{{ route('infaq-disini.create', ['type' => 'infaq']) }}">Infaq</a></li>
+                    <li><a href="{{ route('infaq-disini.create', ['type' => 'infaq']) }}">Infaq</a></li>
                     <li><a href="{{ route('donasi-disini.create', ['type' => 'zakat']) }}">Zakat</a></li>
                 </ul>
             </div>
