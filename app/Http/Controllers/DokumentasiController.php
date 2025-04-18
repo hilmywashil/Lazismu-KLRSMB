@@ -45,7 +45,7 @@ class DokumentasiController extends Controller
             'image' => $filename,
         ]);
 
-        return redirect()->to('/')->with(['success' => 'Berhasil Menambahkan Dokumentasi!']);
+        return redirect()->route('admin.program')->with(['success' => 'Berhasil Menambahkan Dokumentasi!']);
     }
 
     public function edit($id)
@@ -68,13 +68,13 @@ class DokumentasiController extends Controller
             'deskripsi' => $validated['deskripsi'],
         ]);
 
-        return redirect()->to('/')->with('success', 'Berhasil Mengupdate Dokumentasi!');
+        return redirect()->route('admin.program')->with('success', 'Berhasil Mengupdate Dokumentasi!');
     }
     public function destroy($id): RedirectResponse
     {
         $dokumentasi = Dokumentasi::findOrFail($id);
         $dokumentasi->delete();
 
-        return redirect()->to('/')->with(['success' => 'Berhasil Menghapus Dokumentasi!']);
+        return redirect()->route('admin.program')->with(['success' => 'Berhasil Menghapus Dokumentasi!']);
     }
 }

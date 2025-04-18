@@ -18,22 +18,22 @@
                                     alt="{{ $infaq->title }}" style="height: 220px; object-fit: cover;">
 
                                 <div class="card-body d-flex flex-column justify-content-between">
-                                    <div class="text-center mb-3">
+                                    <div class="text-center mb-2">
                                         <h5 class="card-title">{{ $infaq->title }}</h5>
                                     </div>
 
                                     <p class="mb-2"><strong>Target:</strong> Rp {{ number_format($infaq->target, 0, ',', '.') }}
                                     </p>
                                     <div class="progress mb-3" style="height: 8px;">
-                                        <div class="progress-bar bg-warning" role="progressbar" style="width: 50%;"
+                                        <div class="progress-bar" role="progressbar" style="width: 50%; background-color: #f68f28;"
                                             aria-valuenow="50" aria-valuemin="0" aria-valuemax="100">
                                         </div>
                                     </div>
 
                                     <div class="text-center">
                                         <a href="{{ route('infaq.kirim-infaq', ['infaq' => $infaq->id]) }}"
-                                            class="btn btn-success">
-                                            Donasi Sekarang
+                                            class="btn" style="background-color: #f68f28; color: white;">
+                                            Infaq Sekarang
                                         </a>
                                     </div>
                                 </div>

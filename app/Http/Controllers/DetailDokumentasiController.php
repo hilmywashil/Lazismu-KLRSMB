@@ -13,6 +13,12 @@ class DetailDokumentasiController extends Controller
         $details = DetailDokumentasi::where('dokumentasi_id', $id)->latest()->get();
         return view('dokumentasis.detail.index', compact('details', 'id'));
     }
+    public function adminShow($id)
+    {
+        $details = DetailDokumentasi::where('dokumentasi_id', $id)->latest()->get();
+
+        return view('admin.program.detail-program', compact('details', 'id'));
+    }
 
     public function store(Request $request): RedirectResponse
     {

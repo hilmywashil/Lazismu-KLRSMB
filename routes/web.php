@@ -83,6 +83,11 @@ Route::middleware('admin')->group(function () {
     Route::post('/admin/hero/store', [HeroController::class, 'store'])->name('admin.hero.store');
     Route::delete('/admin/hero/delete/{id}', [HeroController::class, 'destroy'])->name('admin.hero.delete');
 
+    Route::get('admin/program', [DokumentasiController::class, 'index'])->name('admin.program');
+    Route::get('admin/program/create', [DokumentasiController::class, 'create'])->name('admin.program.create');
+    Route::get('admin/program/show/{id}', [DetailDokumentasiController::class, 'adminShow'])->name('admin.program.show');
+    Route::delete('admin/program/delete/{id}', [DokumentasiController::class, 'destroy'])->name('admin.program.delete');
+
     Route::get('/admin/galleries', [GalleryController::class, 'index'])->name('admin.galeri');
     Route::get('/admin/galeri/add', [GalleryController::class, 'create'])->name('admin.galeri.create');
     Route::post('/admin/galeri/store', [GalleryController::class, 'store'])->name('admin.galeri.store');

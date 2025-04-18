@@ -13,7 +13,7 @@ class InfaqController extends Controller
 {
     public function index(): View
     {
-        $infaqs = Infaq::latest()->paginate(5);
+        $infaqs = Infaq::latest()->paginate();
 
         return view('admin.infaq.infaq', compact('infaqs'));
     }
@@ -112,7 +112,7 @@ class InfaqController extends Controller
     //KIRIM INFAQ
     public function dataInfaq(): View
     {
-        $dataInfaqs = KirimInfaq::latest()->paginate();
+        $dataInfaqs = KirimInfaq::with('infaq')->paginate();
 
         return view('admin.data.data-infaq', compact('dataInfaqs'));
     }

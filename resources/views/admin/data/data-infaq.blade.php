@@ -16,7 +16,7 @@
                                 <th class="border border-gray-300 px-4 py-2">Email</th>
                                 <th class="border border-gray-300 px-4 py-2">Jumlah Infaq</th>
                                 <th class="border border-gray-300 px-4 py-2">Metode Pembayaran</th>
-                                <th class="border border-gray-300 px-4 py-2">Infaq ID</th>
+                                <th class="border border-gray-300 px-4 py-2">Jenis Infaq</th>
                                 <th class="border border-gray-300 px-4 py-2">Tanggal</th>
                             </tr>
                         </thead>
@@ -29,7 +29,7 @@
                                         {{ number_format($data->jumlah, 0, ',', '.') }}
                                     </td>
                                     <td class="border border-gray-300 px-4 py-2">{{ $data->metode_pembayaran }}</td>
-                                    <td class="border border-gray-300 px-4 py-2 text-center">{{ $data->infaq_id }}</td>
+                                    <td class="border border-gray-300 px-4 py-2 text-center">{{ $data->infaq->title }}</td>
                                     <td class="border border-gray-300 px-4 py-2 text-center">{{ $data->created_at }}</td>
                                 </tr>
                             @endforeach

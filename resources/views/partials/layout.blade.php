@@ -51,7 +51,7 @@
                 </a>
                 <nav id="navmenu" class="navmenu">
                     <ul>
-                        <li><a href="/" class="active">Beranda</a></li>
+                        <li><a href="/">Beranda</a></li>
                         <li class="dropdown"><a href="#"><span>Tentang kami</span> <i
                                     class="bi bi-chevron-down toggle-dropdown"></i></a>
                             <ul>

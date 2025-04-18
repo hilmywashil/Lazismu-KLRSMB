@@ -39,7 +39,7 @@
             <div class="container">
                 <div class="row gy-2">
                     <div class="section-title text-center" data-aos="fade-up">
-                        <h2>Pilar Program Utama Lazismu</h2>
+                        <h2>Program Utama Lazismu</h2>
                     </div>
                     @foreach ($dokumentasis as $dok)
                         <div class="col-xl-4 col-md-6 d-flex" data-aos="fade-up" data-aos-delay="200">
@@ -51,29 +51,13 @@
                                             class="stretched">{{ $dok->judul }}</a></h4>
                                     <p style="font-size: 14px;">{{ $dok->deskripsi }}</p>
                                 </div>
-                                @if (auth()->user() && auth()->user()->role === 'admin')
-                                    <div class="mt-3 d-flex justify-content-between">
-                                        <a href="{{ route('dokumentasi.edit', $dok->id) }}" class="btn btn-warning btn-sm">Edit</a>
-                                        <form action="{{ route('dokumentasi.destroy', $dok->id) }}" method="POST"
-                                            onsubmit="return confirm('Are you sure you want to delete this item?');">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button type="submit" class="btn btn-danger btn-sm">Hapus</button>
-                                        </form>
-                                    </div>
-                                @endif
+
                             </div>
                         </div>
                     @endforeach
                     @if ($dokumentasis->isEmpty())
                         <div class="col-12 text-center" data-aos="fade-up" data-aos-delay="200">
                             <p>Belum ada yang tersedia.</p>
-                        </div>
-                    @endif
-                    @if (auth()->user() && auth()->user()->role === 'admin')
-                        <div class="text-center mt-4">
-                            <a href="{{ route('dokumentasi.create') }}"
-                                style="font-size: 30px; text-decoration: none; font-weight: bold; display: inline-block; background: #28a745; color: white; border-radius: 50%; width: 40px; height: 40px; line-height: 40px;">+</a>
                         </div>
                     @endif
                 </div>
@@ -142,35 +126,35 @@
 
                 <div class="swiper init-swiper">
                     <script type="application/json" class="swiper-config">
-                  {
-                    "loop": true,
-                    "speed": 600,
-                    "autoplay": {
-                      "delay": 5000
-                    },
-                    "slidesPerView": "auto",
-                    "centeredSlides": true,
-                    "pagination": {
-                      "el": ".swiper-pagination",
-                      "type": "bullets",
-                      "clickable": true
-                    },
-                    "breakpoints": {
-                      "320": {
-                        "slidesPerView": 1,
-                        "spaceBetween": 0
-                      },
-                      "768": {
-                        "slidesPerView": 3,
-                        "spaceBetween": 20
-                      },
-                      "1200": {
-                        "slidesPerView": 5,
-                        "spaceBetween": 20
+                      {
+                        "loop": true,
+                        "speed": 600,
+                        "autoplay": {
+                          "delay": 5000
+                        },
+                        "slidesPerView": "auto",
+                        "centeredSlides": true,
+                        "pagination": {
+                          "el": ".swiper-pagination",
+                          "type": "bullets",
+                          "clickable": true
+                        },
+                        "breakpoints": {
+                          "320": {
+                            "slidesPerView": 1,
+                            "spaceBetween": 0
+                          },
+                          "768": {
+                            "slidesPerView": 3,
+                            "spaceBetween": 20
+                          },
+                          "1200": {
+                            "slidesPerView": 5,
+                            "spaceBetween": 20
+                          }
+                        }
                       }
-                    }
-                  }
-                </script>
+                    </script>
                     <div class="swiper-wrapper align-items-center">
                         <div class="swiper-slide"><a class="glightbox" data-gallery="images-gallery"
                                 href="assets/img/gallery/gallery-1.jpg"><img src="assets/img/gallery/gallery-1.jpg"
