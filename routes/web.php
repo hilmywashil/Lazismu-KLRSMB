@@ -7,6 +7,7 @@ use App\Http\Controllers\HeroController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\DonationController;
 use App\Http\Controllers\InfaqController;
+use App\Http\Controllers\PageController;
 use App\Http\Controllers\TypeController;
 use App\Models\DetailDokumentasi;
 use App\Models\Dokumentasi;
@@ -57,20 +58,39 @@ Route::middleware('auth')->group(function () {
 
 // Group middleware: admin
 Route::middleware('admin')->group(function () {
-    // Donasi
-    Route::get('/donasi', [DonationController::class, 'index']);
 
     // Infaq
     Route::get('/infaq', [InfaqController::class, 'index']);
     Route::get('/infaq/create', [InfaqController::class, 'create'])->name('infaq.create');
     Route::post('/infaq/create', [InfaqController::class, 'store'])->name('infaq.store');
+
+    Route::get('/dokumentasi', [DokumentasiController::class, 'index'])->name('dokumentasi.index');
+    Route::get('/dokumentasi/create', [DokumentasiController::class, 'create'])->name('dokumentasi.create');
+    Route::post('/dokumentasi', [DokumentasiController::class, 'store'])->name('dokumentasi.store');
+
+    Route::post('/dokumentasi/add-gambar', [DetailDokumentasiController::class, 'store'])->name('dokumentasi.gambar');
+    Route::get('/dokumentasi/{id}', [DetailDokumentasiController::class, 'index'])->name('detail.dokumentasi');
+
+    Route::get('/dokumentasi/edit/{id}', [DokumentasiController::class, 'edit'])->name('dokumentasi.edit');
+    Route::put('/dokumentasi/update/{id}', [DokumentasiController::class, 'update'])->name('dokumentasi.update');
+    Route::delete('/dokumentasi/{id}', [DokumentasiController::class, 'destroy'])->name('dokumentasi.destroy');
+
+    Route::get('/admin/heroes', [HeroController::class, 'index'])->name('admin.hero');
+    Route::get('/admin/hero/add', [HeroController::class, 'create'])->name('admin.hero.create');
+    Route::post('/admin/hero/store', [HeroController::class, 'store'])->name('admin.hero.store');
+    Route::delete('/admin/hero/delete/{id}', [HeroController::class, 'destroy'])->name('admin.hero.delete');
+
+    Route::get('/admin/galleries', [GalleryController::class, 'index'])->name('admin.galeri');
+    Route::get('/admin/galeri/add', [GalleryController::class, 'create'])->name('admin.galeri.create');
+    Route::post('/admin/galeri/store', [GalleryController::class, 'store'])->name('admin.galeri.store');
+    Route::delete('/admin/galeri/delete/{id}', [GalleryController::class, 'destroy'])->name('admin.galeri.delete');
+
+
 });
 
-// Payment (Donasi)
-Route::get('/payment-bank', [DonationController::class, 'paymentBank']);
-Route::get('/payment-qris', [DonationController::class, 'paymentQRIS']);
-Route::get('/donasi/create', [DonationController::class, 'create'])->name('donasi.create');
-Route::post('/donasi/create', [DonationController::class, 'store'])->name('donasi.store');
+// Pages
+Route::get('/latar-belakang', [PageController::class, 'latarBelakang'])->name('latar-belakang');
+Route::get('/contact', [PageController::class, 'contact'])->name('contact');
 
 // Payment (Infaq)
 Route::get('/payment-bank-infaq', [InfaqController::class, 'paymentBank'])->name('infaq.payment.bank');
@@ -80,26 +100,8 @@ Route::get('/payment-qris-infaq', [InfaqController::class, 'paymentQRIS'])->name
 Route::resource('/donasi-disini', TypeController::class);
 Route::resource('/infaq-disini', TypeController::class);
 
-Route::get('/dokumentasi', [DokumentasiController::class, 'index'])->name('dokumentasi.index');
-Route::get('/dokumentasi/create', [DokumentasiController::class, 'create'])->name('dokumentasi.create');
-Route::post('/dokumentasi', [DokumentasiController::class, 'store'])->name('dokumentasi.store');
-
-Route::post('/dokumentasi/add-gambar', [DetailDokumentasiController::class, 'store'])->name('dokumentasi.gambar');
-Route::get('/dokumentasi/{id}', [DetailDokumentasiController::class, 'index'])->name('detail.dokumentasi');
-
-Route::get('/dokumentasi/edit/{id}', [DokumentasiController::class, 'edit'])->name('dokumentasi.edit');
-Route::put('/dokumentasi/update/{id}', [DokumentasiController::class, 'update'])->name('dokumentasi.update');
-Route::delete('/dokumentasi/{id}', [DokumentasiController::class, 'destroy'])->name('dokumentasi.destroy');
-
-Route::get('/admin/heroes', [HeroController::class, 'index'])->name('admin.hero');
-Route::get('/admin/hero/add', [HeroController::class, 'create'])->name('admin.hero.create');
-Route::post('/admin/hero/store', [HeroController::class, 'store'])->name('admin.hero.store');
-Route::delete('/admin/hero/delete/{id}', [HeroController::class, 'destroy'])->name('admin.hero.delete');
-
-Route::get('/admin/galleries', [GalleryController::class, 'index'])->name('admin.galeri');
-Route::get('/admin/galeri/add', [GalleryController::class, 'create'])->name('admin.galeri.create');
-Route::post('/admin/galeri/store', [GalleryController::class, 'store'])->name('admin.galeri.store');
-Route::delete('/admin/galeri/delete/{id}', [GalleryController::class, 'destroy'])->name('admin.galeri.delete');
-
+Route::get('/admin/kelola-menu', function () {
+    return view('admin.kelola');
+})->middleware(['auth', 'verified'])->name('kelola-menu');
 
 require __DIR__ . '/auth.php';

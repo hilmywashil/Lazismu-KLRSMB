@@ -1,78 +1,29 @@
-<!DOCTYPE html>
-<html lang="en">
+@extends('partials.layout')
 
-<head>
-    <meta charset="utf-8">
-    <meta content="width=device-width, initial-scale=1.0" name="viewport">
-    <title>Lazismu RSMB</title>
-    <meta name="description" content="">
-    <meta name="keywords" content="">
-    <link href="https://lazismu.org/favicon.png" rel="icon">
-    <link href="https://lazismu.org/favicon.png" rel="apple-touch-icon">
-    <link href="https://fonts.googleapis.com" rel="preconnect">
-    <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
-    <link
-        href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Raleway:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
-        rel="stylesheet">
-    <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-    <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
-    <link href="assets/vendor/aos/aos.css" rel="stylesheet">
-    <link href="assets/vendor/fontawesome-free/css/all.min.css" rel="stylesheet">
-    <link href="assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
-    <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
-    <link href="assets/css/main.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
-</head>
-
-<body class="beranda-page">
-    <header id="header" class="header sticky-top">
-        <div class="topbar d-flex align-items-center">
-            <div class="container d-flex justify-content-center justify-content-md-between">
-                <div class="d-none d-md-flex align-items-center">
-                    <i class="bi bi-bildings-fill me-1"></i> Lazismu Rumah Sakit Muhammadiyah Bandung
-                </div>
-                <div class="d-flex align-items-center">
-                    <i class="bi bi-phone me-1"></i> +62 854 473
-                </div>
-            </div>
-        </div>
-        <div class="branding d-flex align-items-center">
-            <div class="container position-relative d-flex align-items-center justify-content-end">
-                <a href="" class="logo d-flex align-items-center me-auto">
-                    <img src="assets/img/RSMB.png" alt="">
-                </a>
-                <nav id="navmenu" class="navmenu">
-                    <ul>
-                        <li><a href="#hero" class="active">Beranda</a></li>
-                        <li class="dropdown"><a href="#"><span>Tentang kami</span> <i
-                                    class="bi bi-chevron-down toggle-dropdown"></i></a>
-                            <ul>
-                                <li><a href="page/latarbelakang.html">Latar Belakang</a></li>
-                                <li><a href="page/contact.html">Contact</a></li>
-                            </ul>
-                        </li>
-                        <li><a href="#services">Berita</a></li>
-                        <li><a href="{{ '/donasi-disini' }}">Donasi</a></li>
-                        <li><a href="{{ '/login' }}">Login</a></li>
-                    </ul>
-                    <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
-                </nav>
-            </div>
-        </div>
-    </header>
-
+@section('content')
     <main class="main">
         <section id="hero" class="hero section">
             <div style="margin-bottom: 50px;" data-aos="fade-up">
                 <div id="hero-carousel" class="carousel slide carousel-fade" data-bs-ride="carousel"
                     data-bs-interval="5000">
-                    @foreach ($heroes as $h)
+                    @if ($heroes->isEmpty())
                         <div class="carousel-item active"
-                            style="background-color:#f68f28; background-image: url('assets/img/background.jpg'); background-size: 0; background-position: center; display: flex; justify-content: center; align-items: flex-start; height: 100vh;">
-                            <img src="{{ asset('storage/heroes/' . $h->image) }}" alt="" class="img-fluid"
-                                style="width: 57%; height: auto; aspect-ratio: 16 / 9; object-fit: cover; margin-top: 10px; padding: 20px; border-radius: 50px;">
+                            style="background-color:#f68f28; background-image: url('assets/img/placeholder.jpg'); background-size: cover; background-position: center; display: flex; justify-content: center; align-items: center; padding: 40px 0;">
+                            <div class="text-center text-white">
+                                <h3>Banner Kosong</h3>
+                                <p>Silakan unggah gambar banner untuk ditampilkan di sini.</p>
+                            </div>
                         </div>
-                    @endforeach
+                    @else
+                        @foreach ($heroes as $index => $h)
+                            <div class="carousel-item {{ $index === 0 ? 'active' : '' }}"
+                                style="background-color:#f68f28; background-image: url('assets/img/background.jpg'); background-size: cover; background-position: center; display: flex; justify-content: center; align-items: center; padding: 40px 0;">
+                                <img src="{{ asset('storage/heroes/' . $h->image) }}" alt="" class="img-fluid"
+                                    style="aspect-ratio: 16 / 9; width: 70%; object-fit: cover; border-radius: 20px;">
+                            </div>
+                        @endforeach
+                    @endif
+
                     <a class="carousel-control-prev" href="#hero-carousel" role="button" data-bs-slide="prev">
                         <span class="carousel-control-prev-icon bi bi-chevron-left" aria-hidden="true"></span>
                     </a>
@@ -81,22 +32,14 @@
                     </a>
                     <ol class="carousel-indicators"></ol>
                 </div>
-
             </div>
-
         </section>
-        @if (auth()->user() && auth()->user()->role === 'admin')
-            <div class="text-center mt-4">
-                <a href="{{ route('admin.hero') }}"
-                    style="font-size: 30px; text-decoration: none; font-weight: bold; display: inline-block; background: #28a745; color: white; border-radius: 50px; padding-left: 20px; padding-right: 20px;">Kelola
-                    Banner</a>
-            </div>
-        @endif
+
         <section id="featured-services" class="featured-services section">
             <div class="container">
                 <div class="row gy-2">
                     <div class="section-title text-center" data-aos="fade-up">
-                        <h2>6 Pilar Program Utama Lazismu</h2>
+                        <h2>Pilar Program Utama Lazismu</h2>
                     </div>
                     @foreach ($dokumentasis as $dok)
                         <div class="col-xl-4 col-md-6 d-flex" data-aos="fade-up" data-aos-delay="200">
@@ -110,8 +53,7 @@
                                 </div>
                                 @if (auth()->user() && auth()->user()->role === 'admin')
                                     <div class="mt-3 d-flex justify-content-between">
-                                        <a href="{{ route('dokumentasi.edit', $dok->id) }}"
-                                            class="btn btn-warning btn-sm">Edit</a>
+                                        <a href="{{ route('dokumentasi.edit', $dok->id) }}" class="btn btn-warning btn-sm">Edit</a>
                                         <form action="{{ route('dokumentasi.destroy', $dok->id) }}" method="POST"
                                             onsubmit="return confirm('Are you sure you want to delete this item?');">
                                             @csrf
@@ -123,6 +65,11 @@
                             </div>
                         </div>
                     @endforeach
+                    @if ($dokumentasis->isEmpty())
+                        <div class="col-12 text-center" data-aos="fade-up" data-aos-delay="200">
+                            <p>Belum ada yang tersedia.</p>
+                        </div>
+                    @endif
                     @if (auth()->user() && auth()->user()->role === 'admin')
                         <div class="text-center mt-4">
                             <a href="{{ route('dokumentasi.create') }}"
@@ -182,72 +129,80 @@
             </div>
         </section>
 
-        <section id="services" class="services section">
+        <!-- Gallery Section -->
+        <section id="gallery" class="gallery section">
+
+            <!-- Section Title -->
             <div class="container section-title" data-aos="fade-up">
                 <h2>Gallery</h2>
-            </div>
+                <p>Necessitatibus eius consequatur ex aliquid fuga eum quidem sint consectetur velit</p>
+            </div><!-- End Section Title -->
+
             <div class="container" data-aos="fade-up" data-aos-delay="100">
+
                 <div class="swiper init-swiper">
                     <script type="application/json" class="swiper-config">
-            {
-              "loop": true,
-              "speed": 600,
-              "autoplay": {
-                "delay": 5000
-              },
-              "slidesPerView": "auto",
-              "centeredSlides": true,
-              "pagination": {
-                "el": ".swiper-pagination",
-                "type": "bullets",
-                "clickable": true
-              },
-              "breakpoints": {
-                "320": {
-                  "slidesPerView": 1,
-                  "spaceBetween": 0
-                },
-                "768": {
-                  "slidesPerView": 3,
-                  "spaceBetween": 20
-                },
-                "1200": {
-                  "slidesPerView": 5,
-                  "spaceBetween": 20
-                }
-              }
-            }
-          </script>
+                  {
+                    "loop": true,
+                    "speed": 600,
+                    "autoplay": {
+                      "delay": 5000
+                    },
+                    "slidesPerView": "auto",
+                    "centeredSlides": true,
+                    "pagination": {
+                      "el": ".swiper-pagination",
+                      "type": "bullets",
+                      "clickable": true
+                    },
+                    "breakpoints": {
+                      "320": {
+                        "slidesPerView": 1,
+                        "spaceBetween": 0
+                      },
+                      "768": {
+                        "slidesPerView": 3,
+                        "spaceBetween": 20
+                      },
+                      "1200": {
+                        "slidesPerView": 5,
+                        "spaceBetween": 20
+                      }
+                    }
+                  }
+                </script>
                     <div class="swiper-wrapper align-items-center">
-                        <div class="swiper-slide"><a class="glightbox" data-service="images-gallery"
+                        <div class="swiper-slide"><a class="glightbox" data-gallery="images-gallery"
                                 href="assets/img/gallery/gallery-1.jpg"><img src="assets/img/gallery/gallery-1.jpg"
                                     class="img-fluid" alt=""></a></div>
-                        <div class="swiper-slide"><a class="glightbox" data-service="images-gallery"
+                        <div class="swiper-slide"><a class="glightbox" data-gallery="images-gallery"
                                 href="assets/img/gallery/gallery-2.jpg"><img src="assets/img/gallery/gallery-2.jpg"
                                     class="img-fluid" alt=""></a></div>
-                        <div class="swiper-slide"><a class="glightbox" data-service="images-gallery"
+                        <div class="swiper-slide"><a class="glightbox" data-gallery="images-gallery"
                                 href="assets/img/gallery/gallery-3.jpg"><img src="assets/img/gallery/gallery-3.jpg"
                                     class="img-fluid" alt=""></a></div>
-                        <div class="swiper-slide"><a class="glightbox" data-service="images-gallery"
+                        <div class="swiper-slide"><a class="glightbox" data-gallery="images-gallery"
                                 href="assets/img/gallery/gallery-4.jpg"><img src="assets/img/gallery/gallery-4.jpg"
                                     class="img-fluid" alt=""></a></div>
-                        <div class="swiper-slide"><a class="glightbox" data-service="images-gallery"
+                        <div class="swiper-slide"><a class="glightbox" data-gallery="images-gallery"
                                 href="assets/img/gallery/gallery-5.jpg"><img src="assets/img/gallery/gallery-5.jpg"
                                     class="img-fluid" alt=""></a></div>
-                        <div class="swiper-slide"><a class="glightbox" data-service="images-gallery"
+                        <div class="swiper-slide"><a class="glightbox" data-gallery="images-gallery"
                                 href="assets/img/gallery/gallery-6.jpg"><img src="assets/img/gallery/gallery-6.jpg"
                                     class="img-fluid" alt=""></a></div>
-                        <div class="swiper-slide"><a class="glightbox" data-service="images-gallery"
+                        <div class="swiper-slide"><a class="glightbox" data-gallery="images-gallery"
                                 href="assets/img/gallery/gallery-7.jpg"><img src="assets/img/gallery/gallery-7.jpg"
                                     class="img-fluid" alt=""></a></div>
-                        <div class="swiper-slide"><a class="glightbox" data-service="images-gallery"
+                        <div class="swiper-slide"><a class="glightbox" data-gallery="images-gallery"
                                 href="assets/img/gallery/gallery-8.jpg"><img src="assets/img/gallery/gallery-8.jpg"
                                     class="img-fluid" alt=""></a></div>
                     </div>
-                    <div class="swiper-pagination"></div </div>
+                    <div class="swiper-pagination"></div>
                 </div>
-        </section>
 
+            </div>
+
+        </section><!-- /Gallery Section -->
         <section id="contact" class="contact section">
             <div class="container my-5">
                 <div class="section-title text-center mb-4">
@@ -264,91 +219,5 @@
                 </div>
             </div>
         </section>
-
     </main>
-
-    <footer id="footer" class="footer light-background">
-        <div class="container footer-top">
-            <div class="row gy-4">
-                <div class="col-lg-4 col-md-6 footer-about">
-                    <a href="beranda.html" class="logo d-flex align-items-center">
-                        <span class="sitename">RSMB</span>
-                    </a>
-                    <div class="footer-contact pt-3">
-                        <p>A108 Adam Street</p>
-                        <p>New York, NY 535022</p>
-                        <p class="mt-3"><strong>Phone:</strong> <span>+1 5589 55488 55</span></p>
-                        <p><strong>Email:</strong> <span>info@example.com</span></p>
-                    </div>
-                    <div class="social-links d-flex mt-4">
-                        <a href=""><i class="bi bi-twitter-x"></i></a>
-                        <a href=""><i class="bi bi-facebook"></i></a>
-                        <a href=""><i class="bi bi-instagram"></i></a>
-                        <a href=""><i class="bi bi-linkedin"></i></a>
-                    </div>
-                </div>
-                <div class="col-lg-2 col-md-3 footer-links">
-                    <h4>Useful Links</h4>
-                    <ul>
-                        <li><a href="#">Dashboard</a></li>
-                        <li><a href="#">About us</a></li>
-                        <li><a href="#">Services</a></li>
-                        <li><a href="#">Terms of service</a></li>
-                        <li><a href="#">Privacy policy</a></li>
-                    </ul>
-                </div>
-                <div class="col-lg-2 col-md-3 footer-links">
-                    <h4>Our Services</h4>
-                    <ul>
-                        <li><a href="#">Web Design</a></li>
-                        <li><a href="#">Web Development</a></li>
-                        <li><a href="#">Product Management</a></li>
-                        <li><a href="#">Marketing</a></li>
-                        <li><a href="#">Graphic Design</a></li>
-                    </ul>
-                </div>
-                <div class="col-lg-2 col-md-3 footer-links">
-                    <h4>Hic solutasetp</h4>
-                    <ul>
-                        <li><a href="#">Molestiae accusamus iure</a></li>
-                        <li><a href="#">Excepturi dignissimos</a></li>
-                        <li><a href="#">Suscipit distinctio</a></li>
-                        <li><a href="#">Dilecta</a></li>
-                        <li><a href="#">Sit quas consectetur</a></li>
-                    </ul>
-                </div>
-                <div class="col-lg-2 col-md-3 footer-links">
-                    <h4>Nobis illum</h4>
-                    <ul>
-                        <li><a href="#">Ipsam</a></li>
-                        <li><a href="#">Laudantium dolorum</a></li>
-                        <li><a href="#">Dinera</a></li>
-                        <li><a href="#">Trodelas</a></li>
-                        <li><a href="#">Flexo</a></li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-        <div class="container copyright text-center mt-4">
-            <p>© <span>Copyright</span> <strong class="px-1 sitename">Medicio</strong> <span>All Rights Reserved</span>
-            </p>
-            <div class="credits">
-                Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a> Distributed by <a
-                    href="https://themewagon.com">ThemeWagon</a>
-            </div>
-        </div>
-    </footer>
-    <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i
-            class="bi bi-arrow-up-short"></i></a>
-    <div id="preloader"></div>
-    <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-    <script src="assets/vendor/php-email-form/validate.js"></script>
-    <script src="assets/vendor/aos/aos.js"></script>
-    <script src="assets/vendor/glightbox/js/glightbox.min.js"></script>
-    <script src="assets/vendor/purecounter/purecounter_vanilla.js"></script>
-    <script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
-    <script src="assets/js/main.js"></script>
-    <script type="module" src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-</body>
-
-</html>
+@endsection
