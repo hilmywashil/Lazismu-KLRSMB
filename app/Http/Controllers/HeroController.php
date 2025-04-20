@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Hero;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
+use Intervention\Image\Facades\Image;
 
 class HeroController extends Controller
 {
@@ -28,10 +30,22 @@ class HeroController extends Controller
         ]);
 
         $image = $request->file('image');
-        $image->storeAs('public/heroes', $image->hashName());
 
+        $filename = $image->hashName();
+        $path = 'public/heroes/' . $filename;
+
+        $img = Image::make($image->getRealPath())
+            ->resize(1200, null, function ($constraint) {
+                $constraint->aspectRatio();
+                $constraint->upsize();
+            })
+            ->encode(null, 80);
+
+        Storage::put($path, (string) $img);
+
+        // Simpan data ke database
         Hero::create([
-            'image' => $image->hashName(),
+            'image' => $filename,
         ]);
 
         return redirect()->back()->with(['success' => 'Gambar berhasil diupload!']);

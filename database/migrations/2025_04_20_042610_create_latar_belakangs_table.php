@@ -11,10 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('galleries', function (Blueprint $table) {
+        Schema::create('latar_belakangs', function (Blueprint $table) {
             $table->id();
-            $table->string('image');
-            $table->string('judul');
+            $table->longText('isi');
             $table->timestamps();
         });
     }
@@ -24,6 +23,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('galleries');
+        Schema::dropIfExists('latar_belakangs');
     }
 };

@@ -41,15 +41,6 @@
             </div>
 
             <div>
-                <label for="image" class="block text-sm font-medium text-gray-700">Gambar Pertama (Opsional)</label>
-                <input type="file" id="image" name="image"
-                    class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm px-3 py-2 focus:ring-blue-500 focus:border-blue-500">
-                @error('image')
-                    <p class="text-red-600 text-sm mt-1">{{ $message }}</p>
-                @enderror
-            </div>
-
-            <div>
                 <button type="submit"
                     class="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-lg shadow">
                     Tambah Dokumentasi

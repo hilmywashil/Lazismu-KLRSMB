@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Storage;
+use Intervention\Image\Facades\Image;
 
 class InfaqController extends Controller
 {
@@ -40,17 +41,27 @@ class InfaqController extends Controller
         ]);
 
         $image = $request->file('image');
-        $image->storeAs('public/infaqs', $image->hashName());
+        $filename = $image->hashName();
+        $path = 'public/infaqs/' . $filename;
+
+        $img = Image::make($image->getRealPath())
+            ->resize(1200, null, function ($constraint) {
+                $constraint->aspectRatio();
+                $constraint->upsize();
+            })
+            ->encode(null, 80);
+
+        Storage::put($path, (string) $img);
 
         Infaq::create([
-            'image' => $image->hashName(),
+            'image' => $filename,
             'title' => $request->title,
             'target' => $request->target
         ]);
 
         return redirect()->route('admin.infaq.index')->with(['success' => 'Berhasil Menambahkan!']);
     }
-
+    
     public function edit(string $id): View
     {
         $infaq = Infaq::findOrFail($id);
@@ -71,12 +82,22 @@ class InfaqController extends Controller
         if ($request->hasFile('image')) {
 
             $image = $request->file('image');
-            $image->storeAs('public/infaqs', $image->hashName());
+            $filename = $image->hashName();
+            $path = 'public/infaqs/' . $filename;
+
+            $img = Image::make($image->getRealPath())
+                ->resize(1200, null, function ($constraint) {
+                    $constraint->aspectRatio();
+                    $constraint->upsize();
+                })
+                ->encode(null, 80);
+
+            Storage::put($path, (string) $img);
 
             Storage::delete('public/infaqs/' . $infaq->image);
 
             $infaq->update([
-                'image' => $image->hashName(),
+                'image' => $filename,
                 'title' => $request->title,
                 'target' => $request->target
             ]);
@@ -91,7 +112,6 @@ class InfaqController extends Controller
 
         return redirect()->route('admin.infaq.index')->with(['success' => 'Data Berhasil Diubah!']);
     }
-
     public function destroy($id): RedirectResponse
     {
         $infaq = Infaq::findOrFail($id);
@@ -117,7 +137,7 @@ class InfaqController extends Controller
 
         return view('infaq.kirim-infaq', [
             'infaq_id' => $infaq->id,
-            'infaq' => $infaq, 
+            'infaq' => $infaq,
         ]);
     }
 

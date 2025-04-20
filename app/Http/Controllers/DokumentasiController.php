@@ -25,7 +25,6 @@ class DokumentasiController extends Controller
         $this->validate($request, [
             'judul' => 'required',
             'deskripsi' => 'required',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048'
         ]);
 
         $dokumentasi = Dokumentasi::create([
@@ -34,11 +33,6 @@ class DokumentasiController extends Controller
         ]);
 
         $filename = null;
-        if ($request->hasFile('image')) {
-            $image = $request->file('image');
-            $image->storeAs('public/dokumentasi', $image->hashName());
-            $filename = $image->hashName();
-        }
 
         DetailDokumentasi::create([
             'dokumentasi_id' => $dokumentasi->id,

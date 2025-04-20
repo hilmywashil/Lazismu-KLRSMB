@@ -6,12 +6,14 @@ use App\Http\Controllers\GalleryController;
 use App\Http\Controllers\HeroController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\InfaqController;
+use App\Http\Controllers\LatarBelakangController;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\QRISController;
 use App\Http\Controllers\QRISZakatController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ZakatController;
+use App\Models\DetailDokumentasi;
 use App\Models\Dokumentasi;
 use App\Models\Hero;
 use App\Models\User;
@@ -33,6 +35,7 @@ Route::get('/', function () {
     return view('welcome', [
         'dokumentasis' => Dokumentasi::take(6)->get(),
         'heroes' => Hero::take(6)->get(),
+        'details' => DetailDokumentasi::take('16')->get(),
     ]);
 });
 
@@ -62,6 +65,13 @@ Route::middleware('admin')->group(function () {
 
     // Kelola Pengguna
     Route::get('/admin/pengguna', [UserController::class, 'index'])->name('admin.pengguna');
+
+    //Page Admin
+    Route::get('/admin/latar-belakang', [LatarBelakangController::class, 'index'])->name('admin.latar-belakang');
+    Route::get('/admin/latar-belakang/create', [LatarBelakangController::class, 'create'])->name('admin.latar-belakang.create');
+    Route::post('/admin/latar-belakang/store', [LatarBelakangController::class, 'store'])->name('admin.latar-belakang.store');
+    Route::get('/admin/latar-belakang/edit/{id}', [LatarBelakangController::class, 'edit'])->name('admin.latar-belakang.edit');
+    Route::put('/admin/latar-belakang/update/{id}', [LatarBelakangController::class, 'update'])->name('admin.latar-belakang.update');
 
     //INFAQ
     Route::get('/admin/infaq', [InfaqController::class, 'index'])->name('admin.infaq.index');
@@ -106,12 +116,6 @@ Route::middleware('admin')->group(function () {
     Route::put('/admin/program/update/{id}', [DokumentasiController::class, 'update'])->name('admin.program.update');
     Route::delete('admin/program/delete/{id}', [DokumentasiController::class, 'destroy'])->name('admin.program.delete');
 
-    //Galeri (Belum kepake)
-    Route::get('/admin/galleries', [GalleryController::class, 'index'])->name('admin.galeri');
-    Route::get('/admin/galeri/add', [GalleryController::class, 'create'])->name('admin.galeri.create');
-    Route::post('/admin/galeri/store', [GalleryController::class, 'store'])->name('admin.galeri.store');
-    Route::delete('/admin/galeri/delete/{id}', [GalleryController::class, 'destroy'])->name('admin.galeri.delete');
-
     //Kelola QRIS
     Route::get('/admin/qris', [QRISController::class, 'kelolaQris'])->name('admin.qris.kelola');
 
@@ -127,12 +131,15 @@ Route::middleware('admin')->group(function () {
 
     Route::get('/admin/kelola-menu', function () {
         return view('admin.kelola');
-    })->middleware(['auth', 'verified'])->name('kelola-menu');
+    })->middleware(['auth', 'admin', 'verified'])->name('kelola-menu');
 
     Route::get('/admin/data', function () {
         return view('admin.data');
     })->middleware(['auth', 'verified'])->name('data');
     
+    Route::get('/admin/kelola-pages', function () {
+        return view('admin.kelola-page');
+    })->middleware(['auth', 'admin', 'verified'])->name('kelola.pages');
 });
 
 // Pages

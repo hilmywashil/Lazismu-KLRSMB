@@ -52,7 +52,7 @@
             {{ $slot }}
         </main>
     </div>
-    
+
     <!-- Script -->
     @stack('scripts')
 </body>

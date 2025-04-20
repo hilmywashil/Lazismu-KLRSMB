@@ -23,8 +23,8 @@
                         </x-nav-link>
                     </div>
                     <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                        <x-nav-link :href="route('kelola-menu')" :active="request()->routeIs('kelola-menu')">
-                            {{ __('Kelola Menu Website') }}
+                        <x-nav-link :href="route('kelola-menu')" :active="request()->routeIs('kelola-menu', 'admin.hero')">
+                            {{ __('Kelola Konten Website') }}
                         </x-nav-link>
                     </div>
                     <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">

@@ -6,6 +6,7 @@ use App\Models\DetailDokumentasi;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Intervention\Image\Facades\Image;
 
 class DetailDokumentasiController extends Controller
 {
@@ -28,16 +29,27 @@ class DetailDokumentasiController extends Controller
         ]);
 
         $image = $request->file('image');
-        $image->storeAs('public/dokumentasi', $image->hashName());
+
+        $filename = $image->hashName();
+        $path = 'public/dokumentasi/' . $filename;
+
+        $img = Image::make($image->getRealPath())
+            ->resize(1000, null, function ($constraint) {
+                $constraint->aspectRatio();
+                $constraint->upsize();
+            })
+            ->encode(null, 75); 
+
+        Storage::put($path, (string) $img);
 
         $dokumentasiId = $request->input('dokumentasi_id');
 
         DetailDokumentasi::create([
-            'image' => $image->hashName(),
+            'image' => $filename,
             'dokumentasi_id' => $dokumentasiId
         ]);
 
-        return redirect()->back()->with('success', 'Sukses upload gambar');
+        return redirect()->back()->with('success', 'Sukses upload dan kompres gambar');
     }
     public function destroy($id): RedirectResponse
     {
