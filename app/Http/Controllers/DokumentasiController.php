@@ -13,7 +13,7 @@ class DokumentasiController extends Controller
     {
         $dokumentasis = Dokumentasi::latest()->paginate();
 
-        return view('dokumentasis.index', compact('dokumentasis'));
+        return view('admin.program.index', compact('dokumentasis'));
     }
 
     public function create()
@@ -52,7 +52,7 @@ class DokumentasiController extends Controller
     {
         $dokumentasi = Dokumentasi::findOrFail($id);
 
-        return view('dokumentasis.edit', compact('dokumentasi'));
+        return view('admin.program.edit', compact('dokumentasi'));
     }
     public function update(Request $request, $id): RedirectResponse
     {

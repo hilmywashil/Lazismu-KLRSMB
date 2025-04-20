@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Infaq;
 use App\Models\KirimInfaq;
+use App\Models\KirimZakat;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 use Illuminate\Http\RedirectResponse;
@@ -47,21 +48,14 @@ class InfaqController extends Controller
             'target' => $request->target
         ]);
 
-        return redirect()->route('admin.infaq.index')->with(['success' => 'Berhasil Berinfaq!']);
-    }
-
-    public function show(string $id): View
-    {
-        $infaq = Infaq::findOrFail($id);
-
-        return view('infaqs.show', compact('infaq'));
+        return redirect()->route('admin.infaq.index')->with(['success' => 'Berhasil Menambahkan!']);
     }
 
     public function edit(string $id): View
     {
         $infaq = Infaq::findOrFail($id);
 
-        return view('infaqs.edit', compact('infaq'));
+        return view('admin.infaq.edit', compact('infaq'));
     }
 
     public function update(Request $request, $id): RedirectResponse
@@ -152,5 +146,28 @@ class InfaqController extends Controller
         }
 
         return redirect()->route('infaq.index')->with(['success' => 'Berhasil Berinfaq!']);
+    }
+
+    public function destroyAllKirimInfaq(): RedirectResponse
+    {
+        KirimInfaq::truncate();
+
+        return redirect()->route('admin.infaq.data')->with(['success' => 'Semua data Infaq berhasil dihapus!']);
+    }
+
+    public function riwayat(): View
+    {
+        $dataInfaqs = KirimInfaq::all();
+        $dataZakats = KirimZakat::all();
+
+        return view('admin.data.riwayat', compact('dataInfaqs', 'dataZakats'));
+    }
+
+    public function destroyAllRiwayat(): RedirectResponse
+    {
+        KirimInfaq::truncate();
+        KirimZakat::truncate();
+
+        return redirect()->route('admin.data.riwayat')->with(['success' => 'Semua data berhasil dihapus!']);
     }
 }

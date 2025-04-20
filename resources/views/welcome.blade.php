@@ -47,7 +47,7 @@
                                 style="padding: 20px; border-radius: 8px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); width: 100%; margin: 0 auto; background: #fff; display: flex; flex-direction: column; justify-content: space-between;">
                                 <div>
                                     <h4 style="font-size: 16px; font-weight: bold;"><a
-                                            href="{{ route('detail.dokumentasi', $dok->id) }}"
+                                            href="{{ route('detail.program', $dok->id) }}"
                                             class="stretched">{{ $dok->judul }}</a></h4>
                                     <p style="font-size: 14px;">{{ $dok->deskripsi }}</p>
                                 </div>
@@ -83,7 +83,7 @@
             <div class="container">
                 <div class="row gy-4">
                     <div class="col-lg-6 position-relative align-self-start" data-aos="fade-up" data-aos-delay="100">
-                        <img src="assets/img/about.jpg" class="img-fluid" alt="">
+                        <img src="assets/img/rumahsakitmb.jpg" class="img-fluid" alt="">
                     </div>
                     <div class="col-lg-6 content" data-aos="fade-up" data-aos-delay="200">
                         <h3>Voluptatem dignissimos provident quasi corporis voluptates sit assumenda.</h3>

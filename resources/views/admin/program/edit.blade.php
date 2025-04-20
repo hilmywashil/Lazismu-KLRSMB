@@ -19,7 +19,7 @@
             </div>
         @endif
 
-        <form action="{{ route('dokumentasi.update', $dokumentasi->id) }}" method="POST" enctype="multipart/form-data"
+        <form action="{{ route('admin.program.update', $dokumentasi->id) }}" method="POST" enctype="multipart/form-data"
             class="space-y-6">
             @csrf
             @method('PUT')

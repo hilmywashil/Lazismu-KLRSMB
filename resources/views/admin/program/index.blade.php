@@ -26,7 +26,7 @@
                                 class="text-white bg-blue-500 px-4 py-2 rounded hover:bg-blue-600">
                                 Lihat
                             </a>
-                            <a href=""
+                            <a href="{{ route('admin.program.edit', $item->id) }}"
                                 class="text-white bg-yellow-500 px-4 py-2 rounded hover:bg-yellow-600">
                                 Edit
                             </a>

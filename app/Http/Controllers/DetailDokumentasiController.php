@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\DetailDokumentasi;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class DetailDokumentasiController extends Controller
 {
@@ -37,5 +38,16 @@ class DetailDokumentasiController extends Controller
         ]);
 
         return redirect()->back()->with('success', 'Sukses upload gambar');
+    }
+    public function destroy($id): RedirectResponse
+    {
+        $detail = DetailDokumentasi::findOrFail($id);
+        $detail->delete();
+
+        if ($detail->image) {
+            Storage::delete('public/storage/dokumentasi/' . $detail->image);
+        }
+
+        return redirect()->back()->with(['success' => 'Berhasil Menghapus!']);
     }
 }

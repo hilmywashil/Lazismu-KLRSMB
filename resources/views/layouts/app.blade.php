@@ -6,19 +6,31 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'Laravel') }}</title>
+    <title>Dasbor Admin Lazismu KLRSMB</title>
 
-    <!-- Fonts -->
+    <!-- Favicon -->
+    <link href="https://lazismu.org/favicon.png" rel="icon">
+    <link href="https://lazismu.org/favicon.png" rel="apple-touch-icon">
+
+
+    <!-- Bootstrap Icon (BI) -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
-    <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11.5.5/dist/sweetalert2.min.css" rel="stylesheet">
+
+    <!-- Font untuk panel Admin -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
     <style>
         body {
             font-family: 'Poppins', sans-serif;
         }
     </style>
+
     <!-- Scripts -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
+
+    <!-- Sweet Alert -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 
@@ -40,6 +52,8 @@
             {{ $slot }}
         </main>
     </div>
+    
+    <!-- Script -->
     @stack('scripts')
 </body>
 

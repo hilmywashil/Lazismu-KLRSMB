@@ -2,16 +2,28 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\QRIS;
+use App\Models\QRISZakat;
 use Illuminate\Http\Request;
 
 class PaymentController extends Controller
 {
-    public function bank()
+    public function infaqBank()
     {
-        return view('payment.paymentBank');
+        return view('payment.infaq.paymentBank');
     }
-    public function qris()
+    public function infaqQris()
     {
-        return view('payment.paymentQRIS');
+        $qrises = QRIS::all();
+        return view('payment.infaq.paymentQRIS', compact('qrises'));
+    }
+    public function zakatBank()
+    {
+        return view('payment.zakat.paymentBank');
+    }
+    public function zakatQris()
+    {
+        $qriszakats = QRISZakat::all();
+        return view('payment.zakat.paymentQRIS', compact('qriszakats'));
     }
 }

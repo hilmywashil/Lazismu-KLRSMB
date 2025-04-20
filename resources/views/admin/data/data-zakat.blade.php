@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Data Infaq') }}
+            {{ __('Data Zakat') }}
         </h2>
     </x-slot>
 
@@ -14,14 +14,14 @@
                             <tr>
                                 <th class="border border-gray-300 px-4 py-2">Nama Donatur</th>
                                 <th class="border border-gray-300 px-4 py-2">Email</th>
-                                <th class="border border-gray-300 px-4 py-2">Jumlah Infaq</th>
+                                <th class="border border-gray-300 px-4 py-2">Jumlah Zakat</th>
                                 <th class="border border-gray-300 px-4 py-2">Metode Pembayaran</th>
-                                <th class="border border-gray-300 px-4 py-2">Jenis Infaq</th>
+                                <th class="border border-gray-300 px-4 py-2">Jenis Zakat</th>
                                 <th class="border border-gray-300 px-4 py-2">Tanggal</th>
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($dataInfaqs as $data)
+                            @foreach ($dataZakats as $data)
                                 <tr>
                                     <td class="border border-gray-300 px-4 py-2">{{ $data->nama }}</td>
                                     <td class="border border-gray-300 px-4 py-2">{{ $data->email }}</td>
@@ -29,16 +29,15 @@
                                         Rp {{ number_format($data->jumlah, 0, ',', '.') }}
                                     </td>
                                     <td class="border border-gray-300 px-4 py-2">{{ $data->metode_pembayaran }}</td>
-                                    <td class="border border-gray-300 px-4 py-2 text-center">{{ $data->infaq->title }}</td>
+                                    <td class="border border-gray-300 px-4 py-2 text-center">{{ $data->zakat->title }}</td>
                                     <td class="border border-gray-300 px-4 py-2 text-center">{{ $data->created_at }}</td>
                                 </tr>
                             @endforeach
                         </tbody>
                     </table>
 
-                    {{-- Tombol Hapus Semua Data --}}
                     <div class="mt-4">
-                        <form id="delete-all-form" action="{{ route('data-infaq.destroyAll') }}" method="POST">
+                        <form id="delete-all-form" action="{{ route('data-zakat.destroyAll') }}" method="POST">
                             @csrf
                             @method('DELETE')
                             <button type="submit"

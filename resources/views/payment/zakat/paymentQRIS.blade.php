@@ -10,11 +10,18 @@
                             <div class="row align-items-center">
                                 <!-- Gambar QRIS -->
                                 <div class="col-md-6 text-center mb-4 mb-md-0" data-aos="zoom-in">
-                                    <img src="{{ asset('assets/img/infaq.jpeg') }}" alt="QRIS Donasi"
-                                        class="img-fluid qris-img" data-aos="flip-left" data-aos-delay="100"
-                                        onclick="showFullQRIS(this)" style="cursor: pointer;">
+                                    @if ($qriszakats->isEmpty())
+                                        <img src="{{ asset('assets/img/placeholderQRIS.png') }}" alt="QRIS Placeholder"
+                                            class="img-fluid qris-img" data-aos="flip-left" data-aos-delay="100"
+                                            style="cursor: not-allowed;">
+                                    @else
+                                        @foreach ($qriszakats as $qris)
+                                            <img src="{{ asset('storage/qris/' . $qris->image) }}" alt="QRIS Donasi"
+                                                class="img-fluid qris-img" data-aos="flip-left" data-aos-delay="100"
+                                                onclick="showFullQRIS(this)" style="cursor: pointer;">
+                                        @endforeach
+                                    @endif
                                 </div>
-
                                 <!-- Tulisan -->
                                 <div class="col-md-6 text-center text-md-left" data-aos="fade-left">
                                     <h5 class="mb-4">Scan QRIS di samping untuk melanjutkan pembayaran Infaq</h5>

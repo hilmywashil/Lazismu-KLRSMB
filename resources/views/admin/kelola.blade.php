@@ -26,6 +26,15 @@
                     <h5 class="text-center text-lg font-semibold">Kelola Jenis Infaq</h5>
                 </a>
 
+                <!-- Kartu Kelola Berita -->
+                <a href="{{ route('admin.zakat.index') }}"
+                    class="block p-6 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 transition">
+                    <div class="flex items-center justify-center mb-3">
+                        <i class="bi bi-wallet text-4xl text-orange-500"></i>
+                    </div>
+                    <h5 class="text-center text-lg font-semibold">Kelola Jenis Zakat</h5>
+                </a>
+
                 <!-- Kartu Kelola Galeri -->
                 <a href="{{ route('admin.program') }}"
                     class="block p-6 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 transition">
@@ -33,6 +42,15 @@
                         <i class="bi bi-collection text-4xl text-purple-500"></i>
                     </div>
                     <h5 class="text-center text-lg font-semibold">Kelola Program Lazismu</h5>
+                </a>
+
+                <!-- Kartu Kelola Galeri -->
+                <a href="{{ route('admin.qris.kelola') }}"
+                    class="block p-6 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 transition">
+                    <div class="flex items-center justify-center mb-3">
+                        <i class="bi bi-qr-code-scan text-4xl text-purple-500"></i>
+                    </div>
+                    <h5 class="text-center text-lg font-semibold">Kelola QRIS Zakat dan Infaq</h5>
                 </a>
 
                 <!-- Tambah kartu lainnya sesuai kebutuhan -->
