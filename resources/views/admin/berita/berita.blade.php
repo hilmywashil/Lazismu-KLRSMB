@@ -4,7 +4,7 @@
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">
                 {{ __('Kelola Berita') }}
             </h2>
-            <a href="{{ route('admin.infaq.create') }}"
+            <a href="{{ route('admin.berita.create') }}"
                 class="inline-block bg-blue-600 text-white px-4 py-2 rounded shadow hover:bg-blue-700 transition">
                 + Tambah Berita
             </a>
@@ -17,21 +17,21 @@
                 @forelse ($beritas as $berita)
                     <div class="bg-white rounded-lg shadow-lg p-4 flex flex-col justify-between" data-aos="fade-up"
                         data-aos-delay="100">
-                        <img src="{{ asset('storage/beritas/' . $berita->image) }}" alt="{{ $berita->title }}"
+                        <img src="{{ asset("storage/beritas/{$berita->image}") }}" alt="{{ $berita->judul }}"
                             class="rounded-md w-full h-48 object-cover">
 
                         <div class="mt-4 text-center">
-                            <h4 class="text-lg font-semibold text-gray-800">{{ $berita->title }}</h4>
+                            <h4 class="text-lg font-semibold text-gray-800">{{ $berita->judul }}</h4>
                         </div>
 
                         @if (Auth::check() && Auth::user()->role === 'admin')
                             <hr class="my-3" />
                             <div class="flex justify-center gap-3">
-                                <a href="{{ route('admin.infaq.edit', $infaq->id) }}"
+                                <a href="{{ route('admin.berita.show', $berita->id) }}"
                                     class="bg-yellow-500 text-white px-3 py-1 rounded hover:bg-yellow-600 transition">
-                                    Edit
+                                    Lihat
                                 </a>
-                                <form action="{{ route('admin.infaq.delete', $infaq->id) }}" method="POST" class="delete-form">
+                                <form action="{{ route('admin.berita.delete', $berita->id) }}" method="POST" class="delete-form">
                                     @csrf
                                     @method('DELETE')
                                     <button type="submit"

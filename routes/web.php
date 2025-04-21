@@ -102,6 +102,12 @@ Route::middleware('admin')->group(function () {
 
     //Berita
     Route::get('/admin/berita', [BeritaController::class, 'index'])->name('admin.berita');
+    Route::get('/admin/berita/{id}', [BeritaController::class, 'show'])->name('admin.berita.show');
+    Route::post('/admin/berita/store', [BeritaController::class, 'store'])->name('admin.berita.store');
+    Route::get('/admin/berita/edit/{id}', [BeritaController::class, 'edit'])->name('admin.berita.edit');
+    Route::put('/admin/berita/update/{id}', [BeritaController::class, 'update'])->name('admin.berita.update');
+    Route::delete('/admin/berita/delete/{id}', [BeritaController::class, 'destroy'])->name('admin.berita.delete');
+    Route::get('/admin/berita/create', [BeritaController::class, 'create'])->name('admin.berita.create');
 
     //Banner Hero
     Route::get('/admin/heroes', [HeroController::class, 'index'])->name('admin.hero');

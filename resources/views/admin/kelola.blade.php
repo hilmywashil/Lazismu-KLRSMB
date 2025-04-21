@@ -62,6 +62,15 @@
                     <h5 class="text-center text-lg font-semibold">Kelola Pages</h5>
                 </a>
 
+                <!-- Kartu Kelola Berita -->
+                <a href="{{ route('admin.berita') }}"
+                    class="block p-6 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 transition">
+                    <div class="flex items-center justify-center mb-3">
+                        <i class="bi bi-newspaper text-4xl text-red-500"></i>
+                    </div>
+                    <h5 class="text-center text-lg font-semibold">Kelola Berita</h5>
+                </a>
+
             </div>
         </div>
     </div>
