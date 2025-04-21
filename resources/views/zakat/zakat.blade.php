@@ -24,13 +24,7 @@
 
                                     <p class="mb-2"><strong>Target:</strong> Rp {{ number_format($zakat->target, 0, ',', '.') }}
                                     </p>
-                                    <div class="progress mb-3" style="height: 8px;">
-                                        <div class="progress-bar" role="progressbar"
-                                            style="width: 50%; background-color: #f68f28;" aria-valuenow="50" aria-valuemin="0"
-                                            aria-valuemax="100">
-                                        </div>
-                                    </div>
-
+    <br>
                                     <div class="text-center">
                                         <a href="{{ route('zakat.kirim-zakat', ['zakat' => $zakat->id]) }}" class="btn"
                                             style="background-color: #f68f28; color: white;">

@@ -13,6 +13,7 @@ use App\Http\Controllers\QRISController;
 use App\Http\Controllers\QRISZakatController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ZakatController;
+use App\Http\Controllers\BeritaController;
 use App\Models\DetailDokumentasi;
 use App\Models\Dokumentasi;
 use App\Models\Hero;
@@ -98,6 +99,9 @@ Route::middleware('admin')->group(function () {
     //Riwayat Zakat & Infaq
     Route::get('/admin/riwayat', [InfaqController::class, 'riwayat'])->name('admin.riwayat');
     Route::delete('/admin/riwayat/delete', [InfaqController::class, 'destroyAllRiwayat'])->name('riwayat.destroyAll');
+
+    //Berita
+    Route::get('/admin/berita', [BeritaController::class, 'index'])->name('admin.berita');
 
     //Banner Hero
     Route::get('/admin/heroes', [HeroController::class, 'index'])->name('admin.hero');

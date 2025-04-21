@@ -27,7 +27,7 @@
                 </a>
 
                 <!-- Semua Data -->
-                <a href="{{ route('admin.infaq.index') }}"
+                <a href="{{ route('admin.riwayat') }}"
                     class="block p-6 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 transition">
                     <div class="flex items-center justify-center mb-3">
                         <i class="bi bi-clock-history text-4xl text-yellow-500"></i>
