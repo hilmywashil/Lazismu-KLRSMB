@@ -156,6 +156,10 @@ Route::middleware('admin')->group(function () {
 Route::get('/latar-belakang', [PageController::class, 'latarBelakang'])->name('latar-belakang');
 Route::get('/contact', [PageController::class, 'contact'])->name('contact');
 
+//Berita
+Route::get('/berita', [BeritaController::class, 'userPage'])->name('berita.index');
+Route::get('/berita/{id}', [BeritaController::class, 'userPageDetail'])->name('berita.detail');
+
 //Infaq untuk User
 Route::get('/infaq', [InfaqController::class, 'userPage'])->name('infaq.index');
 Route::get('/berinfaq/{infaq}', [InfaqController::class, 'halamanKirimInfaq'])->name('infaq.kirim-infaq');

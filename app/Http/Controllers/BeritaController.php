@@ -17,6 +17,20 @@ class BeritaController extends Controller
         return view('admin.berita.berita', compact('beritas'));
     }
 
+    public function userPage()
+    {
+        $beritas = Berita::latest()->get();
+
+        return view('berita.berita', compact('beritas'));
+    }
+
+    public function userPageDetail($id)
+    {
+        $berita = Berita::findOrFail($id);
+
+        return view('berita.detail', compact('berita'));
+    }
+
     public function create()
     {
         return view('admin.berita.create');
@@ -61,6 +75,44 @@ class BeritaController extends Controller
     {
         $berita = Berita::findOrFail($id);
         return view('admin.berita.edit', compact('berita'));
+    }
+
+    public function update(Request $request, $id)
+    {
+        $berita = Berita::findOrFail($id);
+
+        $request->validate([
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'judul' => 'required|string|max:255',
+            'konten' => 'required|string',
+        ]);
+
+        if ($request->hasFile('image')) {
+            // Delete old image
+            Storage::delete('public/beritas/' . $berita->image);
+
+            // Upload new image
+            $image = $request->file('image');
+            $filename = $image->hashName();
+            $path = 'public/beritas/' . $filename;
+
+            $img = Image::make($image->getRealPath())
+                ->resize(1200, null, function ($constraint) {
+                    $constraint->aspectRatio();
+                    $constraint->upsize();
+                })
+                ->encode(null, 80);
+
+            Storage::put($path, (string) $img);
+
+            $berita->image = $filename;
+        }
+
+        $berita->judul = $request->judul;
+        $berita->konten = $request->konten;
+        $berita->save();
+
+        return redirect()->route('admin.berita')->with('success', 'Berita updated successfully.');
     }
 
     public function destroy($id)

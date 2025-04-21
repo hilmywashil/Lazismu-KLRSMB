@@ -59,7 +59,7 @@
                                 <li><a href="{{ route('contact') }}">Contact</a></li>
                             </ul>
                         </li>
-                        <li><a href="#services">Berita</a></li>
+                        <li><a href="{{ route('berita.index') }}">Berita</a></li>
                         <li class="dropdown"><a href="#"><span>Zakat & Infaq</span> <i
                                     class="bi bi-chevron-down toggle-dropdown"></i></a>
                             <ul>

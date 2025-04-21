@@ -61,7 +61,7 @@ class ZakatController extends Controller
     {
         $zakat = Zakat::findOrFail($id);
 
-        return view('zakat.edit', compact('zakat'));
+        return view('admin.zakat.edit', compact('zakat'));
     }
 
     public function update(Request $request, $id): RedirectResponse
